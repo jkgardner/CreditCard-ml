@@ -1,4 +1,5 @@
 var fs = require("fs");
+var csv = require("csv-parser")
 var path = require("path");
 var formidable = require("formidable");
 
@@ -12,6 +13,21 @@ function processUpload(filePath)
     if (err) throw err;
     console.log('File Renamed!');
   });
+  if(file.ext == ".csv")
+  {
+    fs.createReadStream(file.dir+"/accepted/"+fileName)
+    .pipe(csv())
+    .on('data', (row) => {
+      console.log(row);
+    })
+    .on('end', () => {
+      console.log('CSV file successfully processed');
+    });
+  }
+  else {
+    console.log("not a csv file!")
+  }
+
 };
 exports.Upload = function(req)
 {
