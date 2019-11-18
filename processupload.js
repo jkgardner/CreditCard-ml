@@ -4,25 +4,14 @@ var formidable = require("formidable");
 
 function processUpload(filePath)
 {
-
   var file = path.parse(filePath);
-  //var newName = splitExtension[0]+Date.now()+'.'+splitExtension[1]
   var fileName = file.name+Date.now()+file.ext;
   console.log(fileName);
-  fs.rename(filePath, file.dir+"/accepted/"+fileName/*path.resolve("/accepted/"+fileName)*/, function (err)
+  fs.rename(filePath, file.dir+"/accepted/"+fileName, function (err)
   {
     if (err) throw err;
     console.log('File Renamed!');
   });
-  //fs.readFile(path.join(file.dir+'/'+fileName), function(err, data) {
-  //  if (err) throw err;
-  //  fs.writeFile(path.join(file.root+'/accepted/'+fileName), data, function (err)
-  //  {
-  //    if (err) throw err;
-  //    console.log('Saved!');
-  //  });
-  //  });
-
 };
 exports.Upload = function(req)
 {
@@ -50,7 +39,6 @@ exports.Upload = function(req)
     })
     .on('end', (name, file) => {
       processUpload(result);
-      //res.sendFile(path.join(__dirname + '/Pages/Home.html'));
     })
     return result;
 };
