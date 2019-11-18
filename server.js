@@ -23,30 +23,3 @@ app.get('/normalize.css', function(req, res) {
     //console.log(res);
     res.sendFile(path.join(__dirname + '/Pages/normalize.css'));
 });
-
-
-
-http.createServer(function (req, res) {
-    console.log(req.url);
-    if(req.url != "/favicon.ico")
-    {
-      var q = url.parse(req.url, true);
-      var qdata = q.query;
-      console.log(q.host);
-      console.log(qdata.AN);
-      var parsedAccountNumber = parser.parseAccountNumber(qdata.AN.toString());
-
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      res.write(''+parsedAccountNumber);
-      return res.end();
-    }
-    else
-    {
-      res.writeHead(200, {'Content-Type': 'text/html'} );
-      res.write('<link rel="icon" href="./favicon.ico">');
-      res.end();
-      console.log('favicon requested');
-      return;
-    }
-
-}).listen(port);
