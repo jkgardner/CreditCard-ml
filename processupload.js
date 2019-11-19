@@ -24,7 +24,8 @@ function processUpload(filePath)
       console.log('CSV file successfully processed');
     });
   }
-  else {
+  else
+  {
     console.log("not a csv file!")
   }
 
