@@ -1,9 +1,9 @@
 var fs = require("fs");
-var csv = require("csv-parser")
+var csv = require("csv-parser");
 var path = require("path");
 var formidable = require("formidable");
 
-function processUpload(filePath)
+function CSVtoData(filePath)
 {
   var file = path.parse(filePath);
   var fileName = file.name+Date.now()+file.ext;
@@ -15,14 +15,19 @@ function processUpload(filePath)
   });
   if(file.ext == ".csv")
   {
+    var csvData=[];
     fs.createReadStream(file.dir+"/accepted/"+fileName)
     .pipe(csv())
     .on('data', (row) => {
-      console.log(row);
+      csvData.push(row);
+      //console.log(row);
     })
     .on('end', () => {
+      console.log('Completed data: '+csvData);
       console.log('CSV file successfully processed');
+
     });
+    return csvData;
   }
   else
   {
@@ -30,20 +35,25 @@ function processUpload(filePath)
   }
 
 };
+
+function DataToCSV(data)
+{
+  //TODO: Take input data and convert to CSV
+};
+
 exports.Upload = function(req)
 {
   var result="";
   new formidable.IncomingForm().parse(req)
     .on('fileBegin', (name, file) => {
         file.path = __dirname + '/uploads/' + file.name
-        console.log("Upload Handler path: "+file.path);
         result = file.path.toString();
     })
     .on('field', (name, field) => {
       console.log('Field', name, field)
     })
     .on('file', (name, file) => {
-      console.log('Uploaded file', name, file)
+      //console.log('Uploaded file', name, file)
     })
     .on('aborted', () => {
       console.error('Request aborted by the user')
@@ -55,7 +65,7 @@ exports.Upload = function(req)
       result = "fail";
     })
     .on('end', (name, file) => {
-      processUpload(result);
+      var readCsv = CSVtoData(result);
+      //console.log('read csv data:'+readCsv);
     })
-    return result;
 };
