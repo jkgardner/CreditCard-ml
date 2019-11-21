@@ -1,5 +1,6 @@
 var fs = require("fs");
 var csv = require("csv-parser");
+var parser = require("./parser");
 var path = require("path");
 var formidable = require("formidable");
 
@@ -38,6 +39,7 @@ function CSVtoData(filePath)
 
 function DataToCSV(data)
 {
+
   //TODO: Take input data and convert to CSV
 };
 
