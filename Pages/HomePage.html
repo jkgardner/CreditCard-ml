@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="normalize.css"/>
+    <link rel="icon" type="image/ico" href="favicon.ico">
+</head>
+<body>
+    <span class="spacer"></span>
+    <div class="column-md-8">
+        <div class="upload-border">
+            <div class="file_upload_area">
+                <h1>File Upload</h1>
+                <form class="upload-form" method="POST" action="/submit-datasheet" enctype="multipart/form-data">
+                    <div class="inputfile-group">
+                        <span class="fileNameText">Select File</span>
+                        <input id="fileNameSelect" type="file" name="document" />
+                    </div>
+                    <div class="btn-submit-container">
+                        <input id="btn-submit" type="submit" value="Go!"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
