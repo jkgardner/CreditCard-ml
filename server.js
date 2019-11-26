@@ -15,18 +15,24 @@ var upload = require("./processupload");
 const server = app.listen(7000, () => {
   console.log(`Express running → PORT ${server.address().port}`);
   //var date = New Date();
-  console.log(Date.now());
+  console.log("Server Started...");
+  console.log(Date(Date.now().toString()));
+  console.log("\r\n");
 });
 
-app.get('/', function(req, res) {
+app.get('/home', function(req, res) {
+	console.log("GET 127.0.0.1:7000/home");
+    res.sendFile(path.join(__dirname + '/Pages/Home.html'));
+});
+
+app.get('/parse', function(req, res) {
     var accountNumber = req.query.AN;
     console.log(accountNumber);
     if(req.query.AN != undefined)
     {
       var parsedAccountNumber = parser.parseAccountNumber(req.query.AN);
       console.log(parsedAccountNumber.toString());
-    }
-    res.sendFile(path.join(__dirname + '/Pages/Home.html'));
+    };
 });
 
 app.post('/submit-datasheet', (req, res) => {
